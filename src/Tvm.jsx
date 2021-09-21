@@ -2,13 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Finance from 'tvm-financejs';
 
+class Variable extends React.Component {
+
+    compute = () => {
+     
+        this.props.compute(this.props.name);
+    }
+
+    render() {
+
+        return (
+
+            <div>
+                <label htmlFor={this.props.name}>{this.props.label}</label>
+                
+                <input id={this.props.name} 
+                    type='text'
+                    name={this.props.name} 
+                    value={this.props.variables[this.props.name]}
+                    onChange={this.props.onChange} />
+                
+                <button onClick={this.compute}>Compute</button>
+            </div>
+        );
+    }
+}
+
 class Tvm extends React.Component {
 
     state = {
-        pv: '',
-        fv: '',
-        nper: '',
-        rate: ''
+        variables: {
+            pv: '',
+            fv: '',
+            rate: '',
+            nper: ''
+        }
     }
 
     roundOffNumber = (num) => {
@@ -16,24 +44,58 @@ class Tvm extends React.Component {
         return Math.round(num * 100)/ 100;
     }
 
-    compute = () => {
+    compute = (name) => {
 
         let finance = new Finance();
 
-        let pv = finance.PV(this.state.rate/100 , this.state.nper, null, this.state.fv);
+        let value = '';
 
-        this.setState({pv: this.roundOffNumber(pv)});
+
+        switch(name) {
+
+            case 'pv': 
+                value = this.roundOffNumber(
+                    finance.PV(this.state.variables.rate / 100 , this.state.variables.nper, null, this.state.variables.fv)
+                );
+                break;
+
+            case 'fv': 
+                value = this.roundOffNumber(
+                    finance.FV(this.state.variables.rate / 100 , this.state.variables.nper, null, this.state.variables.pv)
+                );
+                break;
+
+            case 'rate': 
+                value = finance.RATE(this.state.variables.nper, null, this.state.variables.pv, this.state.variables.fv);
+
+                let value2 = finance.RATE('10', 0, '100', '1000', null, null);
+                
+                console.log(value);
+                console.log(value2);
+                console.log(this.state.variables);
+                break;
+            
+            case 'nper':
+
+                value = finance.NPER(this.state.variables.rate / 100, null, this.state.variables.pv, this.state.variables.fv);
+                
+                break;
+        }
+
+        let variables = Object.assign({}, this.state.variables);
+
+        variables[name] = value;
+
+        this.setState({variables: variables});
     }
 
     onChange = (evt) => {
 
-        let name = evt.target.name;
+        let variables = Object.assign({}, this.state.variables);
 
-        var pv = {};
+        variables[evt.target.name] = evt.target.value;
 
-        pv[name] = evt.target.value
-
-        this.setState(pv);
+        this.setState({variables: variables});
     }
 
     render() {
@@ -44,41 +106,29 @@ class Tvm extends React.Component {
 
                 <h1>Time Value Of Money Calculator</h1>
 
-                <div>
-                    <label htmlFor='pv'>Present Value</label>
-                    
-                    <input id='pv' 
-                        type='number'
-                        name='pv' 
-                        value={this.state.pv}
-                        onChange={this.onChange} />
+                <Variable name='pv'
+                    label='Present Value'
+                    onChange={this.onChange}
+                    compute={this.compute}
+                    variables={this.state.variables} />
+                
+                <Variable name='fv'
+                    label='Future Value'
+                    onChange={this.onChange}
+                    compute={this.compute}
+                    variables={this.state.variables} />
+                
+                <Variable name='rate'
+                    label='Annual Rate'
+                    onChange={this.onChange}
+                    compute={this.compute}
+                    variables={this.state.variables} />
 
-                    <button onClick={this.compute}>Compute</button>
-                </div>
-
-                <div>
-                    <label htmlFor='fv'>Future Value</label>
-                    
-                    <input id='fv' type='number' name='fv' value={this.state.fv} onChange={this.onChange} />
-
-                    <button>Compute</button>
-                </div>
-
-                <div>
-                    <label htmlFor='rate'>Annual Rate</label>
-                    
-                    <input id='rate' type='number' name='rate' value={this.state.rate} onChange={this.onChange} />
-
-                    <button>Compute</button>
-                </div>
-
-                <div>
-                    <label htmlFor='nper'>No. of Years</label>
-                    
-                    <input id='nper' type='number' name='nper' value={this.state.nper} onChange={this.onChange} />
-
-                    <button>Compute</button>
-                </div>
+                <Variable name='nper'
+                    label='No. of Years'
+                    onChange={this.onChange}
+                    compute={this.compute}
+                    variables={this.state.variables} />
 
             </div>
         );

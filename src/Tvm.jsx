@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Finance from 'tvm-financejs';
+// import PropTypes from 'prop-types';
+// import Finance from 'tvm-financejs';
+import TvmCalculator from 'tvm-calculator';
 
 class Variable extends React.Component {
 
@@ -17,7 +18,7 @@ class Variable extends React.Component {
                 <label htmlFor={this.props.name}>{this.props.label}</label>
                 
                 <input id={this.props.name} 
-                    type='text'
+                    type='number'
                     name={this.props.name} 
                     value={this.props.variables[this.props.name]}
                     onChange={this.props.onChange} />
@@ -35,50 +36,34 @@ class Tvm extends React.Component {
             pv: '',
             fv: '',
             rate: '',
-            nper: ''
+            nper: '',
+            pmt: 0,
+            cf: 1,
+            pf: 1
         }
     }
 
-    roundOffNumber = (num) => {
-
-        return Math.round(num * 100)/ 100;
-    }
 
     compute = (name) => {
 
-        let finance = new Finance();
-
         let value = '';
-
 
         switch(name) {
 
             case 'pv': 
-                value = this.roundOffNumber(
-                    finance.PV(this.state.variables.rate / 100 , this.state.variables.nper, null, this.state.variables.fv)
-                );
+                value = TvmCalculator.calcPV(this.state.variables);
                 break;
 
             case 'fv': 
-                value = this.roundOffNumber(
-                    finance.FV(this.state.variables.rate / 100 , this.state.variables.nper, null, this.state.variables.pv)
-                );
+                value = TvmCalculator.calcFV(this.state.variables);
                 break;
 
             case 'rate': 
-                value = finance.RATE(this.state.variables.nper, null, this.state.variables.pv, this.state.variables.fv);
-
-                let value2 = finance.RATE('10', 0, '100', '1000', null, null);
-                
-                console.log(value);
-                console.log(value2);
-                console.log(this.state.variables);
+                value = TvmCalculator.calcInterestRate(this.state.variables);
                 break;
             
             case 'nper':
-
-                value = finance.NPER(this.state.variables.rate / 100, null, this.state.variables.pv, this.state.variables.fv);
-                
+                value = TvmCalculator.calcNPer(this.state.variables);
                 break;
         }
 
@@ -93,7 +78,10 @@ class Tvm extends React.Component {
 
         let variables = Object.assign({}, this.state.variables);
 
-        variables[evt.target.name] = evt.target.value;
+        let value = parseFloat(evt.target.value);
+
+
+        variables[evt.target.name] = value;
 
         this.setState({variables: variables});
     }

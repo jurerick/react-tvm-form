@@ -1,23 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import Tvm from './Tvm';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto font-mono">
+      <div className="mx-auto max-w-2xl my-8">
+        <Tvm />
+      </div>
     </div>
   );
 }

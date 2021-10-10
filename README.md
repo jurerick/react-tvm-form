@@ -1,4 +1,4 @@
-# Time Value Of Money - React App
+# Time Value Of Money Calculator - React App
 
 ## View it live: https://jurerick.github.io/react-tvm-form/
 
@@ -10,5 +10,5 @@ This is a ready made component for your react project.
 
 TVM is a finance calculator computing the value of a money considering time & rate.
 
-This is good use for investment, discounting, or use it as side-tool for computing other metrics related such: IRR.
+This is good use for investment, discounting, or as a side-tool for computing other metrics related such: IRR.
 

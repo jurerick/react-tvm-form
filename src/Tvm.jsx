@@ -56,24 +56,19 @@ class Tvm extends React.Component {
 
         let value = '';
 
-        switch(name) {
-
-            case 'pv': 
-                value = TvmCalculator.calcPV(this.state.variables);
-                break;
-
-            case 'fv': 
-                value = TvmCalculator.calcFV(this.state.variables);
-                break;
-
-            case 'rate': 
-                value = TvmCalculator.calcInterestRate(this.state.variables);
-                break;
-            
-            case 'nper':
-                value = TvmCalculator.calcNPer(this.state.variables);
-                break;
+        if(name == 'pv') {
+            value = TvmCalculator.calcPV(this.state.variables);
         }
+        else if (name == 'fv') {
+            value = TvmCalculator.calcFV(this.state.variables);
+        }
+        else if (name == 'rate') {
+            value = TvmCalculator.calcInterestRate(this.state.variables);
+        }
+        else if(name == 'nper') {
+            value = TvmCalculator.calcNPer(this.state.variables);
+        }
+
 
         let variables = Object.assign({}, this.state.variables);
 

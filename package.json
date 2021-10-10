@@ -16,13 +16,13 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    
+
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
     "predeploy": "craco build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -b master -d build"
   },
   "eslintConfig": {
     "extends": [

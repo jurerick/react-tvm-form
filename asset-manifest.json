@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-tvm-form/static/css/main.0e55b439.chunk.css",
-    "main.js": "/react-tvm-form/static/js/main.cf5991be.chunk.js",
-    "main.js.map": "/react-tvm-form/static/js/main.cf5991be.chunk.js.map",
+    "main.js": "/react-tvm-form/static/js/main.4822bf66.chunk.js",
+    "main.js.map": "/react-tvm-form/static/js/main.4822bf66.chunk.js.map",
     "runtime-main.js": "/react-tvm-form/static/js/runtime-main.ee656017.js",
     "runtime-main.js.map": "/react-tvm-form/static/js/runtime-main.ee656017.js.map",
     "static/js/2.194e6c52.chunk.js": "/react-tvm-form/static/js/2.194e6c52.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.ee656017.js",
     "static/js/2.194e6c52.chunk.js",
     "static/css/main.0e55b439.chunk.css",
-    "static/js/main.cf5991be.chunk.js"
+    "static/js/main.4822bf66.chunk.js"
   ]
 }
